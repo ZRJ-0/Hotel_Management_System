@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.mapper.InRoomMapper">
+	<!--  引入缓存工具类  -->
+	<!--<cache type="com.java.utils.RedisCache"></cache>-->
+
+	<!--  查询入住信息  -->
+	<select id="selectInRoomInfo" resultType="Map" parameterType="Map">
+	    select iri.room_id, rm.room_num, rt.room_type_name, iri.customer_name, iri.gender, iri.idcard,
+			iri.phone, iri.money, iri.create_date, iri.is_vip,vip.vip_rate,  iri.out_room_status from in_room_info iri
+			inner join rooms rm on iri.room_id = rm.id inner join room_type rt on rt.id = rm.room_type_id
+			left join vip on iri.idcard = vip.idcard where iri.status = 1
+			<if test="roomNum != null and roomNum != '' ">
+				and rm.room_num = #{roomNum}
+			</if>
+			<if test="customerName != null and customerName != '' ">
+				and iri.customer_name = #{customerName}
+			</if>
+			<if test="phone != null and phone != '' ">
+				and iri.phone = #{phone}
+			</if>
+			<if test="idcard != null and idcard != '' ">
+				and iri.idcard = #{idcard}
+			</if>
+    </select>
+
+	<select id="selectEmptyRoom" resultType="Map">
+		select rm.id, rm.room_num, rt.room_type_name, rt.room_price from rooms rm inner join
+			room_type rt on rm.room_type_id = rt.id where rm.room_status = 0
+	</select>
+
+	<select id="selectOutRoomInfoById" parameterType="Long" resultType="Map">
+		select iri.id iriId, rm.id roomId, rm.room_num roomNum, iri.customer_name, rt.room_type_name, rt.room_price,
+			iri.money, DATE_FORMAT(iri.create_date, '%Y-%m-%dT%H:%i:%S') as create_date, tp.orderMoney
+			from in_room_info iri inner join rooms rm on iri.room_id = rm.id inner join room_type rt on rt.id =
+			rm.room_type_id left join (select sum(order_money) as orderMoney, iri.id from in_room_info iri
+			left join orders od on iri.id = od.iri_id and od.order_status = 0 GROUP BY od.iri_id) tp on iri.id = tp.id
+			where iri.room_id = #{0} and iri.out_room_status = 0
+	</select>
+
+	<!--  查询所有消费记录,并且包含条件查询  -->
+	<select id="selectCost" resultType="Map" parameterType="Map">
+	    select iri.customer_name, iri.gender, iri.idcard, iri.phone, rm.room_num, od.order_num,
+	    od.order_money, DATE_FORMAT(od.create_date,'%Y-%m-%d %H:%m:%s') as create_date, od.order_status
+	    from in_room_info iri inner join orders od on iri.id = od.iri_id inner join rooms rm on iri.room_id = rm.id
+	    <where>
+			<if test="roomNum != null and roomNum != '' ">
+				and rm.room_num = #{roomNum}
+			</if>
+			<if test="customerName != null and customerName != '' ">
+				and iri.customer_name = #{customerName}
+			</if>
+			<if test="phone != null and phone != '' ">
+				and iri.phone = #{phone}
+			</if>
+			<if test="idcard != null and idcard != '' ">
+				and iri.idcard = #{idcard}
+			</if>
+	    </where>
+    </select>
+</mapper>

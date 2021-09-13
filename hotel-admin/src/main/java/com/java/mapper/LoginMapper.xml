@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.mapper.LoginMapper">
+
+	<resultMap id="BaseOnMenu" type="com.java.pojo.OneMenu">
+		<result column="oneId" property="oneId" javaType="Long"/>
+		<result column="oneName" property="oneName" javaType="String"/>
+		<collection property="twoMenuList" ofType="com.java.pojo.TwoMenu">
+			<result column="twoId" property="twoId" javaType="Long"/>
+			<result column="twoName" property="twoName" javaType="String"/>
+			<result column="url" property="url" javaType="String"/>
+			<result column="parent" property="parent" javaType="Long"/>
+		</collection>
+	</resultMap>
+
+	<!--  根据用户username获取具体的权限  -->
+	<select id="getAuthorityByUsername" resultMap="BaseOnMenu" parameterType="String">
+		select * from
+			(select sa.id oneId, sa.authority_name oneName from system_authority sa inner join user_authority ua
+			on sa.id = ua.authority_id inner join system_user su on su.id = ua.user_id where parent = 0 and su.username = #{0}) t1
+			inner join
+			(select sa.id TwoId, sa.authority_name TwoName, sa.authority_url url, sa.parent from system_authority sa inner join user_authority ua
+			on sa.id = ua.authority_id inner join system_user su on su.id = ua.user_id where parent != 0 and su.username = #{0}) t2
+			where t1.oneId = t2.parent
+	</select>
+
+	<!--  授权信息列表  -->
+	<select id="getSQAuthority" resultMap="BaseOnMenu">
+		select * from
+			(select id oneId, authority_name oneName from system_authority where parent = 0) t1
+			inner join
+			(select id twoId, authority_name twoName, authority_url url, parent from system_authority where parent != 0) t2
+			on t2.parent = t1.oneId where t1.oneId != 5
+	</select>
+</mapper>

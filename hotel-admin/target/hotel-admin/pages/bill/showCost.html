@@ -1,0 +1,300 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <title>消费记录</title>
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css"/>
+    <script src="/static/js/jquery.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue-resource/1.5.3/vue-resource.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".click").click(function () {
+                $(".tip").fadeIn(200);
+            });
+
+            $(".tiptop a").click(function () {
+                $(".tip").fadeOut(200);
+            });
+
+            $(".sure").click(function () {
+                $(".tip").fadeOut(100);
+            });
+
+            $(".cancel").click(function () {
+                $(".tip").fadeOut(100);
+            });
+
+        });
+    </script>
+    <style>
+        /*!*分页*!*/
+        /*.page-bar {*/
+        /*    margin: 40px auto;*/
+        /*    margin-top: 150px;*/
+        /*}*/
+        
+        /*ul, li {*/
+        /*    margin: 0px;*/
+        /*    padding: 0px;*/
+        /*}*/
+        
+        /*li {*/
+        /*    list-style: none*/
+        /*}*/
+        
+        /*.page-bar li:first-child > a {*/
+        /*    margin-left: 0px*/
+        /*}*/
+        
+        /*.page-bar a {*/
+        /*    border: 1px solid #ddd;*/
+        /*    text-decoration: none;*/
+        /*    position: relative;*/
+        /*    float: left;*/
+        /*    padding: 6px 12px;*/
+        /*    margin-left: -1px;*/
+        /*    line-height: 1.42857143;*/
+        /*    color: #5D6062;*/
+        /*    cursor: pointer;*/
+        /*    margin-right: 20px;*/
+        /*}*/
+        
+        /*.page-bar a:hover {*/
+        /*    background-color: #eee;*/
+        /*}*/
+        
+        /*.page-bar a.banclick {*/
+        /*    cursor: not-allowed;*/
+        /*}*/
+        
+        /*.page-bar .active a {*/
+        /*    color: #fff;*/
+        /*    cursor: default;*/
+        /*    background-color: #E96463;*/
+        /*    border-color: #E96463;*/
+        /*}*/
+        
+        /*.page-bar i {*/
+        /*    font-style: normal;*/
+        /*    color: #d44950;*/
+        /*    margin: 0px 4px;*/
+        /*    font-size: 12px;*/
+        /*}*/
+    </style>
+</head>
+<body>
+    <div class="place"><span>位置：</span>
+        <ul class="placeul">
+            <li><a href="main.html">首页</a></li>
+            <li><a href="#">入住管理</a></li>
+            <li><a href="#">消费记录查询</a></li>
+        </ul>
+    </div>
+    <div class="rightinfo">
+        <div class="tools">
+            <ul class="toolbar">
+                <li class="click"><span><img src="/static/images/t01.png"/></span>添加</li>
+                <li class="click"><span><img src="/static/images/t02.png"/></span>修改</li>
+                <li><span><img src="/static/images/t03.png"/></span>删除</li>
+            </ul>
+            <div class="toolbar1">
+                <table>
+                    <form action="javascript:void(0)" method="post" name="serch">
+                        <tr>
+                            <td class="zi"><span>选择分类：</span></td>
+                            <td>
+                                <select id="conditionType">
+                                    <option value="roomNum">房间号</option>
+                                    <option value="customerName">客人姓名</option>
+                                    <option value="phone">手机号码</option>
+                                    <option value="idcard">身份证号码</option>
+                                </select>
+                            </td>
+                            <td class="zi"><span>关键字：</span></td>
+                            <td><input id="keyword" name="roomNum" placeholder="与分类关联" type="text"/></td>
+                            <td><input @click="getByCon" class="button" type="submit" value="查询"/></td>
+                        </tr>
+                    </form>
+                </table>
+            </div>
+        </div>
+        <table class="tablelist">
+            <thead>
+            <tr>
+                <th><input name="" type="checkbox" value=""/></th>
+                <th>编号</th>
+                <th>客人姓名</th>
+                <th>性别</th>
+                <th>身份证号码</th>
+                <th>手机号码</th>
+                <th>房间号</th>
+                <th>订单号</th>
+                <th>消费金额</th>
+                <th>是否结算</th>
+                <th>创建时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(map, index) in costList">
+                <td><input name="" type="checkbox" value=""/></td>
+                <td>{{index + 1}}</td>
+                <td>{{map.customer_name}}</td>
+                <td>{{map.gender == '1' ? '男':'女'}}</td>
+                <td>{{map.idcard}}</td>
+                <td>{{map.phone}}</td>
+                <td>{{map.room_num}}</td>
+                <td>{{map.order_num}}</td>
+                <td>{{map.order_money}}</td>
+                <td>{{map.order_status == '0' ? '未结算': '已结算'}}</td>
+                <td>{{map.create_date}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="tip">
+            <div class="tiptop"><span>提示信息</span><a></a></div>
+            <div class="tipinfo"><span><img src="/static/images/ticon.png"/></span>
+                <div class="tipright">
+                    <p>是否确认对信息的修改 ？</p>
+                    <cite>如果是请点击确定按钮 ，否则请点取消。</cite></div>
+            </div>
+            <div class="tipbtn">
+                <input class="sure" name="" type="button" value="确定"/>
+                &nbsp;
+                <input class="cancel" name="" type="button" value="取消"/>
+            </div>
+        </div>
+    </div>
+    <!--分页-->
+    <!--<div class="page-bar">-->
+    <!--    <ul>-->
+    <!--        <li v-if="cur>1"><a v-on:click="cur&#45;&#45;,pageClick()">上一页</a></li>-->
+    <!--        <li v-if="cur==1"><a class="banclick">上一页</a></li>-->
+    <!--        <li v-bind:class="{ 'active': cur == index}" v-for="index in indexs">-->
+    <!--            <a v-on:click="btnClick(index)">{{ index }}</a>-->
+    <!--        </li>-->
+    <!--        <li v-if="cur!=all"><a v-on:click="cur++,pageClick()">下一页</a></li>-->
+    <!--        <li v-if="cur == all"><a class="banclick">下一页</a></li>-->
+    <!--        <li><a>共<i>{{all}}</i>页</a></li>-->
+    <!--    </ul>-->
+    <!--</div>-->
+    <script type="text/javascript">
+        $(function () {
+            $("#conditionType").change(function () {
+                let val = $(this).find("option:selected").val();
+                $("#keyword").attr("name", val);
+            });
+        });
+        const vue1 = new Vue({
+                el: ".rightinfo",
+                data: {
+                    costList: []
+                },
+                methods: {
+                    getByCon() {
+                        // var jsonData = {
+                        //     "customerName": $("#keyword").val()
+                        // }
+                        var jsonData = '{"' + $("#keyword").attr("name") + '":"' + $("#keyword").val() + '"}';
+                        jsonData = JSON.parse(jsonData);
+                        console.log(jsonData);
+                        this.$http.post("/findCost.do", jsonData, {emulateJSON: true}).then(
+                            function (rs) {
+                                this.costList = rs.body;
+                                // console.log("getByCon: " + this.costList);
+                            },
+                            function (err) {
+                                console.log("vue请求失败!!!");
+                            }
+                        );
+                    }
+                },
+                mounted() {
+                    this.$http.post("/findCost.do").then(
+                        function (rs) {
+                            console.log(rs);
+                            this.costList = rs.body;
+                        },
+                        function (err) {
+                            alert("vue请求出错!!!");
+                        }
+                    )
+                }
+            })
+        ;
+        // const vue2 = new Vue({
+        //     el: ".page-bar",
+        //     data() {
+        //         return {
+        //             all: 10,     //总页数
+        //             cur: 1,     //当前页码
+        //             totalPage: 0,   //当前条数
+        //         }
+        //     },
+        //     methods: {
+        //         //请求数据
+        //         dataListFn: function (index) {
+        //             this.prototype.$axios = axios;
+        //             this.$axios.get("/findCost.do",
+        //                 {
+        //                     params: {
+        //                         page: index,
+        //                         limit: '10',
+        //                         state: 0
+        //                     }
+        //                 }).then((res) => {
+        //                 if (res.data.message == "success") {
+        //                     this.dataList = [];
+        //                     for (let i = 0; i < res.data.data.length; i++) {
+        //                         this.dataList.push(res.data.data[i])
+        //                     }
+        //                     this.all = res.data.totalPage;//总页数
+        //                     this.cur = res.data.pageNum;
+        //                     this.totalPage = res.data.totalPage;
+        //                 }
+        //             });
+        //         },
+        //         //分页
+        //         btnClick: function (data) {//页码点击事件
+        //             if (data != this.cur) {
+        //                 this.cur = data
+        //             }
+        //             //根据点击页数请求数据
+        //             this.dataListFn(this.cur.toString());
+        //         },
+        //         pageClick: function () {
+        //             //根据点击页数请求数据
+        //             this.dataListFn(this.cur.toString());
+        //         }
+        //     },
+        //     computed: {
+        //         //分页
+        //         indexs: function () {
+        //             var left = 1;
+        //             var right = this.all;
+        //             var ar = [];
+        //             if (this.all >= 5) {
+        //                 if (this.cur > 3 && this.cur < this.all - 2) {
+        //                     left = this.cur - 2
+        //                     right = this.cur + 2
+        //                 } else {
+        //                     if (this.cur <= 3) {
+        //                         left = 1
+        //                         right = 5
+        //                     } else {
+        //                         right = this.all
+        //                         left = this.all - 4
+        //                     }
+        //                 }
+        //             }
+        //             while (left <= right) {
+        //                 ar.push(left)
+        //                 left++
+        //             }
+        //             return ar
+        //         }
+        //     }
+        // })
+    </script>
+</body>
+</html>

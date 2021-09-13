@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.mapper.SystemUserMapper">
+	<!--  添加系统用户  -->
+	<insert id="insertSystemUser" parameterType="Map" useGeneratedKeys="true" keyProperty="userId" keyColumn="id">
+		insert into system_user values(null, #{username}, #{pwd}, now(), '1', '0')
+	</insert>
+
+	<!--  添加权限信息  -->
+	<insert id="insertAuthority">
+		insert into user_authority values(#{0}, #{1})
+	</insert>
+</mapper>

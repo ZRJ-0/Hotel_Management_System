@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>hotel-parent</artifactId>
+		<groupId>com.java.hotel-parent</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.java.hotel-admin</groupId>
+  <artifactId>hotel-admin</artifactId>
+  <packaging>war</packaging>
+
+  <name>hotel-admin Maven Webapp</name>
+	<!-- FIXME change it to the project's website -->
+	<url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+  </properties>
+
+<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-pool</groupId>
+			<artifactId>commons-pool</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
+	<dependency>
+		<groupId>commons-httpclient</groupId>
+		<artifactId>commons-httpclient</artifactId>
+	</dependency>
+	<!-- 微信支付工具类 -->
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpcore</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpclient</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>c3p0</groupId>
+		<artifactId>c3p0</artifactId>
+	</dependency>
+	<!-- 数据库驱动 -->
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+	</dependency>
+
+	<!-- 整合mybatis -->
+	<dependency>
+		<groupId>org.mybatis</groupId>
+		<artifactId>mybatis-spring</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>org.mybatis</groupId>
+		<artifactId>mybatis</artifactId>
+	</dependency>
+	<!-- 配置jacson -->
+	<dependency>
+		<groupId>com.fasterxml.jackson.core</groupId>
+		<artifactId>jackson-annotations</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>com.fasterxml.jackson.core</groupId>
+		<artifactId>jackson-core</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>org.codehaus.jackson</groupId>
+		<artifactId>jackson-core-asl</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>com.fasterxml.jackson.core</groupId>
+		<artifactId>jackson-databind</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>org.codehaus.jackson</groupId>
+		<artifactId>jackson-mapper-asl</artifactId>
+	</dependency>
+	<!-- 日志 -->
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		</dependency>
+	<!-- xml解析 -->
+	<dependency>
+		<groupId>org.jdom</groupId>
+		<artifactId>jdom</artifactId>
+	</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+
+	<dependency>
+		<groupId>p6spy</groupId>
+		<artifactId>p6spy</artifactId>
+	</dependency>
+
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+	</dependency>
+
+	<!-- hibernate-validator -->
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-validator</artifactId>
+	</dependency>
+
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-api</artifactId>
+	</dependency>
+
+	<dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-pool2</artifactId>
+	</dependency>
+
+	<dependency>
+		<groupId>com.github.pagehelper</groupId>
+		<artifactId>pagehelper</artifactId>
+      </dependency>
+
+      <dependency>
+	      <groupId>com.github.jsqlparser</groupId>
+          <artifactId>jsqlparser</artifactId>
+      </dependency>
+
+	<dependency>
+		<groupId>redis.clients</groupId>
+		<artifactId>jedis</artifactId>
+	</dependency>
+
+	<dependency>
+		<groupId>org.springframework.data</groupId>
+		<artifactId>spring-data-redis</artifactId>
+	</dependency>
+
+	<!--  引入实体类  -->
+	<dependency>
+		<artifactId>hotel-pojo</artifactId>
+		 <groupId>com.java.hotel-pojo</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</dependency>
+
+	<!--  引入工具类  -->
+	<dependency>
+		<artifactId>hotel-commons</artifactId>
+		<groupId>com.java.hotel-commons</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</dependency>
+</dependencies>
+
+
+  <build>
+    <finalName>hotel-admin</finalName>
+	  <!--如果不添加此节点mybatis的mapper.xml文件都会被漏掉。 -->
+	  <resources>
+	        <resource>
+	            <directory>src/main/java</directory>
+	            <includes>
+	                <include>**/*.properties</include>
+	                <include>**/*.xml</include>
+	            </includes>
+	            <filtering>false</filtering>
+	        </resource>
+	    </resources>
+	  <!--<plugins>-->
+	  <!--  <plugin>-->
+	  <!--      <groupId>org.apache.tomcat.maven</groupId>-->
+	  <!--      <artifactId>tomcat7-maven-plugin</artifactId>-->
+	  <!--      <version>2.2</version>-->
+	  <!--      <configuration>-->
+	  <!--          &lt;!&ndash;项目访问的根目录&ndash;&gt;-->
+	  <!--          <path>/</path>-->
+	  <!--          &lt;!&ndash;端口号&ndash;&gt;-->
+	  <!--          <port>80</port>-->
+	  <!--      </configuration>-->
+	  <!--	  &lt;!&ndash; 在打包的时候运行这个容器 &ndash;&gt;-->
+	  <!--	  <executions>-->
+	  <!--               <execution>-->
+	  <!--                   <phase>package</phase>-->
+	  <!--                   <goals>-->
+	  <!--                       <goal>run</goal>-->
+	  <!--                   </goals>-->
+	  <!--               </execution>-->
+	  <!--           </executions>-->
+	  <!--</plugin>-->
+	  <!--</plugins>-->
+	  <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+		  <plugins>
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+			  <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
+			  <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.22.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>3.2.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>

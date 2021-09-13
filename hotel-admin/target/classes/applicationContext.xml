@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+       
+       <!-- 配置包扫描 -->
+	<context:component-scan base-package="com.java.service.impl"/>
+
+	<!-- 配置读取.properties配置文件的工具类 -->
+	<bean id="propertyPlaceholderConfigurer"
+	      class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+       	<!-- 指定database.properties文件的路径 -->
+		<property name="location" value="classpath:database.properties"></property>
+	</bean>
+
+	<!-- 数据源 -->
+	<!--<bean id="basicDataSource" class="org.apache.commons.dbcp.BasicDataSource">-->
+	<bean id="basicDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+       	<!-- 配置driver -->
+		<property name="driverClass" value="${driver}"></property>
+		<!-- 配置url -->
+		<property name="jdbcUrl" value="${url}"></property>
+		<!-- 配置username -->
+		<property name="user" value="${username}"></property>
+		<!-- 配置password -->
+		<property name="password" value="${password}"></property>
+	</bean>
+
+	<!-- 扫描保存sql语句的局部配置xml文件 -->
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 指定数据源 -->
+		<property name="dataSource" ref="basicDataSource"></property>
+		<!--  指定mybatis主配置文件的位置  -->
+		<property name="configLocation" value="classpath:mybatis.xml"></property>
+		<!--  指定局部xml文件的位置-->
+		<property name="mapperLocations" value="classpath*:com/java/mapper/*.xml"></property>
+	</bean>
+
+	<!-- 扫描dao层接口中的方法，并且将其与对应的xml文件关联起来 -->
+	<bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+       		<!-- 指定dao层接口的存放位置 -->
+		<property name="basePackage" value="com.java.mapper"></property>
+       </bean>
+
+	<!-- 配置注解事务驱动 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		 <property name="dataSource" ref="basicDataSource"/>
+	 </bean>
+	<!--事务注解驱动-->
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+		
+       
+ </beans>

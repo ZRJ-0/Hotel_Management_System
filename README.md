@@ -1,5 +1,5 @@
 # Hotel_Management_System
-Hotel Management System built by SSM
+### Hotel Management System built by SSM and MySQL
 ### 这是一个基于SSM框架和MySQL的的的数据库开发的一个酒店管理系统
 #### 此酒店管理系统特点
 　
